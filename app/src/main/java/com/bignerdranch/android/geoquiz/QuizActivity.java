@@ -2,6 +2,7 @@ package com.bignerdranch.android.geoquiz;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends ActionBarActivity {
+    private static final String TAG = QuizActivity.class.getSimpleName();
+    private static final String KEY_INDEX = "index";
+
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
@@ -47,8 +51,14 @@ public class QuizActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        if ( savedInstanceState != null ) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
+
         setContentView(R.layout.activity_quiz);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -92,6 +102,20 @@ public class QuizActivity extends ActionBarActivity {
             }
         });
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
+//        Log.i(TAG, "onSaveInstanceState");
+//        outPersistentState.putInt(KEY_INDEX, mCurrentIndex);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
