@@ -32,6 +32,7 @@ public class QuizActivity extends ActionBarActivity {
     private int mCurrentIndex = 0;
 
     private void updateQuestion() {
+        //Log.d(TAG, "Updating question text for question #: " + mCurrentIndex, new Exception());
         mQuestionTextView.setText(mQuestionBank[mCurrentIndex].getQuestion());
     }
 
@@ -64,7 +65,6 @@ public class QuizActivity extends ActionBarActivity {
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         final int question = mQuestionBank[mCurrentIndex].getQuestion();
         mQuestionTextView.setText(question);
-        Toast.makeText(QuizActivity.this,"mCurrentIndex = " + mCurrentIndex, Toast.LENGTH_SHORT).show();
 
         mTrueButton = (Button) findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +87,6 @@ public class QuizActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                Toast.makeText(QuizActivity.this,"mCurrentIndex = " + mCurrentIndex, Toast.LENGTH_SHORT).show();
                 updateQuestion();
             }
         });
@@ -97,7 +96,6 @@ public class QuizActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = ((mCurrentIndex - 1) % mQuestionBank.length + mQuestionBank.length) % mQuestionBank.length;
-                Toast.makeText(QuizActivity.this,"mCurrentIndex = " + mCurrentIndex, Toast.LENGTH_SHORT).show();
                 updateQuestion();
             }
         });
