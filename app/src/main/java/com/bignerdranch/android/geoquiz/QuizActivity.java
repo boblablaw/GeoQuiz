@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class QuizActivity extends ActionBarActivity {
     public static final String TAG = QuizActivity.class.getSimpleName();
     private static final String KEY_INDEX = "index";
-    private static final String KEY_CHEAT = "cheat";
+    public static final String KEY_CHEAT = "cheat";
     public static final String EXTRA_ANSWER_IS_TRUE =
             "com.bignerdranch.android.geoquiz.answer_is_true";
 

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class CheatActivity extends Activity {
-    private static final String KEY_CHEAT = "cheat";
     public static final String EXTRA_ANSWER_SHOWN =
             "com.bignerdranch.android.geoquiz.answer_shown";
 
@@ -36,7 +35,7 @@ public class CheatActivity extends Activity {
         mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
 
         if ( savedInstanceState != null ) {
-            mAnswerShown = savedInstanceState.getBoolean(KEY_CHEAT);
+            mAnswerShown = savedInstanceState.getBoolean(QuizActivity.KEY_CHEAT);
         }
 
         if (mAnswerShown) {
@@ -63,6 +62,6 @@ public class CheatActivity extends Activity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putBoolean(KEY_CHEAT, mAnswerShown);
+        savedInstanceState.putBoolean(QuizActivity.KEY_CHEAT, mAnswerShown);
     }
 }
