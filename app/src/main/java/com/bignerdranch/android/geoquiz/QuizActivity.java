@@ -12,8 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends ActionBarActivity {
-    private static final String TAG = QuizActivity.class.getSimpleName();
+    public static final String TAG = QuizActivity.class.getSimpleName();
     private static final String KEY_INDEX = "index";
+    private static final String KEY_CHEAT = "cheat";
     public static final String EXTRA_ANSWER_IS_TRUE =
             "com.bignerdranch.android.geoquiz.answer_is_true";
 
@@ -26,11 +27,11 @@ public class QuizActivity extends ActionBarActivity {
     private TextView mQuestionTextView;
 
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
-            new TrueFalse(R.string.question_oceans, true),
-            new TrueFalse(R.string.question_mideast, false),
-            new TrueFalse(R.string.question_africa, true),
-            new TrueFalse(R.string.question_americas, true),
-            new TrueFalse(R.string.question_asia, true)
+            new TrueFalse(R.string.question_oceans, true, false),
+            new TrueFalse(R.string.question_mideast, false, false),
+            new TrueFalse(R.string.question_africa, true, false),
+            new TrueFalse(R.string.question_americas, true, false),
+            new TrueFalse(R.string.question_asia, true, false)
     };
 
     private int mCurrentIndex = 0;
@@ -44,10 +45,10 @@ public class QuizActivity extends ActionBarActivity {
 
     private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
+        boolean isCheater = mQuestionBank[mCurrentIndex].isCheater();
 
         int messageResId;
-
-        if (mIsCheater) {
+        if (isCheater) {
             messageResId = R.string.judgment_toast;
         } else {
             if (userPressedTrue == answerIsTrue) {
@@ -66,6 +67,7 @@ public class QuizActivity extends ActionBarActivity {
 
         if ( savedInstanceState != null ) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            mIsCheater = savedInstanceState.getBoolean(KEY_CHEAT);
         }
 
         setContentView(R.layout.activity_quiz);
@@ -127,6 +129,7 @@ public class QuizActivity extends ActionBarActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(KEY_CHEAT, mIsCheater);
     }
 
 //    @Override
@@ -151,6 +154,9 @@ public class QuizActivity extends ActionBarActivity {
             return;
         }
         mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
+        if (mIsCheater) {
+            mQuestionBank[mCurrentIndex].setCheater(true);
+        }
     }
 
     @Override
